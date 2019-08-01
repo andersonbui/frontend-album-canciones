@@ -1,32 +1,42 @@
-<div *ngIf="!identity" class="navigation col-lg-1">
+<div *ngIf="identity" class="navigation col-lg-1">
   <h1>
     {{title}}
   </h1>
   <p>Logueado en la app</p>
+  <span>
+    {{identity.nombre}} {{identity.apellido}}
+  </span>
+  <span class="btn btn-warning" (click)="logout()">
+    Cerrar sesion
+  </span>
 </div>
 
-<div class="clearfix" ></div>
+<div class="clearfix"></div>
 
-<div *ngIf="!identity" class="central col-lg-11">
+<div *ngIf="identity" class="central col-lg-11">
   <p>Estas logueado en la aplicacion</p>
 </div>
 
-<div class="col-lg-12 row" *ngIf="identity">
+<div class="col-lg-12 row" *ngIf="!identity">
   <div class="col-lg-6">
     <h1>Identificate</h1>
+    <div *ngIf="errorMessage">
+      <div class="alert alert-danger">
+        <strong>Error!</strong>
+        {{errorMessage}}
+      </div>
+    </div>
     <form #loginForm="ngForm" (ngSubmit)="onSubmit()" action="" class="col-md-7">
       <p>
         <label for="email-identificate">Correo electronico</label>
-        <input id="email-identificate" #email="ngModel" 
-          [(ngModel)]="usuario.email" [ngModelOptions]="{standalone: true}" 
-          type="email" class="form-control" required />
-          <span *ngIf="!email.valid && email.touched">Email requerido</span>
-          {{usuario.nombre}} {{usuario.email}}
+        <input id="email-identificate" #email="ngModel" [(ngModel)]="usuario.email"
+          [ngModelOptions]="{standalone: true}" type="email" class="form-control" required />
+        <span *ngIf="!email.valid && email.touched">Email requerido</span>
       </p>
       <p>
-        <label >Contrasena</label>
-        <input type="password" #password="ngModel" name="email" 
-        [(ngModel)]="usuario.clave" class="form-control" required />
+        <label>Contrasena</label>
+        <input type="password" #password="ngModel" name="email" [(ngModel)]="usuario.clave" class="form-control"
+          required />
         <span></span>
       </p>
       <input type="submit" value="Entrar" class="btn btn-primary">
@@ -34,10 +44,10 @@
   </div>
   <div class="col-lg-6">
     <h1>Registrate</h1>
-    <form class="col-md-10">
+    <form #formulario_registro="ngForm" class="col-md-10">
       <p>
         <label for="">Nombres</label>
-        <input type="text" class="form-control" required />
+        <input #name="ngModel" name="nombre" [(ngModel)]="usuario.nombre" type="text" class="form-control" required />
       </p>
       <p>
         <label for="">Apellidos</label>

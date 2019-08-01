@@ -26,4 +26,20 @@ export class ServicioUsuario {
         return this._http.post(this.url + 'login', params, {headers: headers})
             .map(res => res.json());
     }
+
+    getIdentity() {
+        const identity =  JSON.parse(localStorage.getItem('1d3nt1tv'));
+        if (typeof identity !== 'undefined') {
+            return identity;
+        }
+        return null;
+    }
+
+    getToken() {
+        const token = localStorage.getItem('70k3n');
+        if (typeof token !== 'undefined') {
+            return token;
+        }
+        return null;
+    }
 }
