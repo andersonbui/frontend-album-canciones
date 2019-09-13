@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
   public identity;
   public token;
   public errorMessage;
+  public alertaRegistrar;
+  public clave_2;
 
   constructor(private _servicioUsuario: ServicioUsuario) {
     this.usuario = new Usuario('', '', '', '', '', 'ROLE_USER', '');
@@ -62,9 +64,12 @@ export class AppComponent implements OnInit {
       error => {
         const errorMessagge = <any>error;
         if (errorMessagge != null) {
-          const body = JSON.parse(error._body);
-          this.errorMessage = body.message;
-          console.log(error);
+          console.log('tipo error: ' + typeof error._body);
+          if (typeof error._body === 'string') {
+            const body = JSON.parse(error._body);
+            this.errorMessage = body.message;
+            console.log(error);
+          }
         }
       }
     );
@@ -78,5 +83,31 @@ export class AppComponent implements OnInit {
     this.identity = null;
     this.token = null;
     localStorage.clear(); 
+  }
+
+  public onSubmitRegistrar() {
+    this._servicioUsuario.registrar(this.usuario_registro).subscribe(
+      response => {
+        console.log(`respuesta : ${JSON.stringify(response)}`);
+        const usuario = response.usuario;
+        this.usuario_registro = usuario;
+        console.log(`usuario registrado : ${usuario}`);
+        if (!usuario._id) {
+          this.alertaRegistrar = 'Error al registrarse';
+        } else {
+          this.alertaRegistrar = 'Se ha registrado exitosamente';
+          this.usuario_registro = new Usuario('', '', '', '', '', 'ROLE_USER', '');
+        }
+      },
+      error => {
+        const errorMessagge = <any>error;
+        if (errorMessagge != null) {
+          this.alertaRegistrar = error._body;
+          // this.errorMessage = body.message;
+          console.log(error);
+        }
+      }
+    );
+    console.log(this.usuario_registro);
   }
 }

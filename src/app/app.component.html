@@ -43,27 +43,42 @@
     </form>
   </div>
   <div class="col-lg-6">
-    <h1>Registrate</h1>
-    <form #formulario_registro="ngForm" class="col-md-10">
+    <h1>Registrate</h1>    
+    <div *ngIf="alertaRegistrar">
+      <div class="alert alert-success">
+        <strong>Felicidades!</strong>
+        {{alertaRegistrar}}
+      </div>
+    </div>
+    <form #formulario_registro="ngForm" (ngSubmit)="onSubmitRegistrar()" class="col-md-10">
       <p>
         <label for="">Nombres</label>
-        <input #name="ngModel" name="nombre" [(ngModel)]="usuario.nombre" type="text" class="form-control" required />
+        <input #name="ngModel" name="nombre" [(ngModel)]="usuario_registro.nombre" 
+          type="text" class="form-control" required />
+            <span *ngIf="!name.valid && name.touched">El nombre es obligatorio</span>
       </p>
       <p>
         <label for="">Apellidos</label>
-        <input type="text" class="form-control" required />
+        <input #apellido="ngModel" name="apellido" [(ngModel)]="usuario_registro.apellido" 
+          type="text" class="form-control" required />
       </p>
       <p>
-        <label for="">Correo electronico</label>
-        <input type="text" class="form-control" required />
+        <label for="email-identificate">correo electronico</label>
+        <input id="email-identificate" #email="ngModel" name="email" [(ngModel)]="usuario_registro.email"
+          type="email" class="form-control" required />
+        <span *ngIf="!email.valid && email.touched">La clave es obligatoria</span>
       </p>
       <p>
-        <label for="">Contrasena</label>
-        <input type="text" class="form-control" required />
+        <label>Contrasena</label>
+        <input type="password" #contrasena="ngModel" name="contrasena" [(ngModel)]="usuario_registro.clave" class="form-control"
+          required />
+          <span *ngIf="!contrasena.valid && contrasena.touched">La clave es obligatoria</span>
       </p>
       <p>
-        <label for="">Contrasena</label>
-        <input type="text" class="form-control" required />
+        <label>Verifique la contrasena</label>
+        <input type="password" #clave2="ngModel" name="clave2" [(ngModel)]="clave_2" class="form-control"
+          required />
+          <span *ngIf="!clave2.valid && clave2.touched">La clave es obligatoria</span>
       </p>
       <input type="submit" value="Registrarse" class="btn btn-primary">
     </form>

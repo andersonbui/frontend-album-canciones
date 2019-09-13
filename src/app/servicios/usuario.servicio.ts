@@ -27,6 +27,14 @@ export class ServicioUsuario {
             .map(res => res.json());
     }
 
+    registrar(user_a_registrar) {
+        const params = JSON.stringify(user_a_registrar);
+        const headers = new Headers({'Content-Type': 'application/json'});
+
+        return this._http.post(this.url + 'usuarios/registrar', params, {headers: headers})
+            .map(res => res.json());
+    }
+
     getIdentity() {
         const identity =  JSON.parse(localStorage.getItem('1d3nt1tv'));
         if (typeof identity !== 'undefined') {
