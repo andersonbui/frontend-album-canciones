@@ -32,7 +32,6 @@ export class AppComponent implements OnInit {
   }
 
   // ngOnChanges() {
-
   // }
 
   public onSubmit(event) {
@@ -40,9 +39,10 @@ export class AppComponent implements OnInit {
     // conseguir datos de usuario
     this._servicioUsuario.singup(this.usuario, true).subscribe(
       response => {
+        console.log('response' + JSON.stringify(response));
         console.log(response.usuario);
         this.identity = response.usuario;
-        if (!this.identity._id) {
+        if (!this.identity && !this.identity._id) {
           alert('Error en la autenticacion');
         } else {
           // Crear elemento en localestorage para mantener identity en sesion
@@ -54,9 +54,8 @@ export class AppComponent implements OnInit {
           } else {
             // Crear elemento en localestorage para mantener token en sesion
             localStorage.setItem('70k3n', this.token);
-
-            console.log(`token ${this.token}`);
-            console.log(`identity ${this.identity}`);
+            this.errorMessage = null;
+            this.usuario = new Usuario('', '', '', '', '', 'ROLE_USER', '');
           }
         }
         // let identity =>
@@ -76,13 +75,12 @@ export class AppComponent implements OnInit {
     // console.log(this.usuario);
   }
 
-
   public logout() {
     localStorage.removeItem('70k3n');
     localStorage.removeItem('1d3nt1tv');
     this.identity = null;
     this.token = null;
-    localStorage.clear(); 
+    localStorage.clear();
   }
 
   public onSubmitRegistrar() {
@@ -97,6 +95,7 @@ export class AppComponent implements OnInit {
         } else {
           this.alertaRegistrar = 'Se ha registrado exitosamente';
           this.usuario_registro = new Usuario('', '', '', '', '', 'ROLE_USER', '');
+          this.clave_2 = '';
         }
       },
       error => {
@@ -110,4 +109,5 @@ export class AppComponent implements OnInit {
     );
     console.log(this.usuario_registro);
   }
+
 }

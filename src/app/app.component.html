@@ -2,19 +2,45 @@
   <h1>
     {{title}}
   </h1>
-  <p>Logueado en la app</p>
-  <span>
-    {{identity.nombre}} {{identity.apellido}}
-  </span>
-  <span class="btn btn-warning" (click)="logout()">
-    Cerrar sesion
-  </span>
+  <nav id="navegacion" >
+    <a href="#" >
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+      Buscar
+    </a>
+    <a href="#" >
+      <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+      Artistas
+    </a>
+    <a href="#" >
+      <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+      Albums
+    </a>
+  </nav>
+  <nav id="usuario_logueado">
+    <span id="nombre_identity">
+      {{identity.nombre}} {{identity.apellido}}
+    </span>
+    <span class="btn btn-warning" (click)="logout()">
+      Cerrar sesion
+    </span>
+    <a [routerLink]="['/']" routerLinkActive="router-link-active" >
+      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      Inicio
+    </a>
+    <a [routerLink]="['/perfil']" routerLinkActive="router-link-active" >
+      <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      editar perfil
+    </a>
+  </nav>
 </div>
 
 <div class="clearfix"></div>
 
+<router-outlet></router-outlet>
+
 <div *ngIf="identity" class="central col-lg-11">
   <p>Estas logueado en la aplicacion</p>
+  <router-outlet></router-outlet>
 </div>
 
 <div class="col-lg-12 row" *ngIf="!identity">

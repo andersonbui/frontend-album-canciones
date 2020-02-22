@@ -35,12 +35,29 @@ export class ServicioUsuario {
             .map(res => res.json());
     }
 
+    editar(usuario) {
+
+        const _id = usuario._id;
+        const params = JSON.stringify(usuario);
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': this.getToken()
+        });
+
+        return this._http.put(this.url + 'usuarios/actualizar/' + _id, params, {headers: headers})
+            .map(res => res.json());
+    }
+
     getIdentity() {
         const identity =  JSON.parse(localStorage.getItem('1d3nt1tv'));
         if (typeof identity !== 'undefined') {
             return identity;
         }
         return null;
+    }
+
+    setIdentity(identity) {
+        localStorage.setItem('1d3nt1tv', JSON.stringify(identity));
     }
 
     getToken() {

@@ -1,0 +1,41 @@
+<div class="col-lg-6" *ngIf='identity'>
+  <h1>{{titulo}}</h1> 
+  
+  <div *ngIf="alertaEditar">
+    <div class="alert alert-success">
+      {{alertaEditar}}
+    </div>
+  </div>
+  <form #formulario_actualizar="ngForm" (ngSubmit)="onEditar()" class="col-md-10">
+    <p>
+      <label for="">Nombres</label>
+      <input #name="ngModel" name="nombre" [(ngModel)]="usuario.nombre" 
+        type="text" class="form-control" required />
+          <span *ngIf="!name.valid && name.touched">El nombre es obligatorio</span>
+    </p>
+    <p>
+      <label for="">Apellidos</label>
+      <input #apellido="ngModel" name="apellido" [(ngModel)]="usuario.apellido" 
+        type="text" class="form-control" required />
+    </p>
+    <p>
+      <label for="email-identificate">correo electronico</label>
+      <input id="email-identificate" #email="ngModel" name="email" [(ngModel)]="usuario.email"
+        type="email" class="form-control" required />
+      <span *ngIf="!email.valid && email.touched">La clave es obligatoria</span>
+    </p>
+    <p>
+      <label>Contrasena</label>
+      <input type="password" #contrasena="ngModel" name="contrasena" [(ngModel)]="clave_1" class="form-control"
+        />
+        <span *ngIf="!contrasena.valid && contrasena.touched">La clave es obligatoria</span>
+    </p>
+    <p>
+      <label>Verifique la contrasena</label>
+      <input type="password" #clave2="ngModel" name="clave2" [(ngModel)]="clave_2" class="form-control"
+        />
+        <span *ngIf="!clave2.valid && clave2.touched">La clave es obligatoria</span>
+    </p>
+    <input type="submit" value="Guardar cambios" class="btn btn-primary">
+  </form>
+</div>
